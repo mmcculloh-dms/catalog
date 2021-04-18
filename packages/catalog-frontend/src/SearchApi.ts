@@ -3,7 +3,9 @@ import * as schema from 'catalog-schema';
 async function fetchJson() {
   return fetch('/index/packages.json')
     .then(response => response.json())
-    .then(response => response.packages);
+    .then(response => response.packages
+      .filter((item: schema.Package) => !item.name.startsWith('@aws-cdk/'))
+    );
 }
 
 export async function searchByQuery(query: string): Promise<schema.Package[]> {
