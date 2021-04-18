@@ -1,9 +1,10 @@
 import * as schema from 'catalog-schema';
 
-async function fetchJson() {
+async function fetchJson(): Promise<schema.Package[]> {
   return fetch('/index/packages.json')
     .then(response => response.json())
     .then(response => response.packages
+      // Hide core libraries
       .filter((item: schema.Package) => !item.name.startsWith('@aws-cdk/'))
     );
 }
